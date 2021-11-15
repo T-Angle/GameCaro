@@ -50,7 +50,8 @@ namespace GameCaro
         {
             Button? btn = sender as Button;
 			btn.BackgroundImage = Image.FromFile(Application.StartupPath + "\\Assets\\circle.png");
-			/*dsjahnkdjsna*/
+
+			/*Nguyen Duc Khai vua chinh*/
         }
     }
 }
