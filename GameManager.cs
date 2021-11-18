@@ -10,7 +10,6 @@
 
     public class GameManager
     {
-
         /* ChessBoard info
 		 * size: 640x640 ~ 20x20
 		 * chess_box: size(32,32)
@@ -34,6 +33,7 @@
         private List<List<Button>> matrix;
         private List<Button> stackCacNuocDi;
         private ENDGAME _endGame;
+        private bool isReady;
 
         public int CurrentPlayer
         {
@@ -66,14 +66,26 @@
 
         #endregion
 
-        public GameManager(Panel chessBoard, PictureBox chessBox1, PictureBox chessBox2, TextBox player1Name, TextBox player2Name)
+        public GameManager(Panel chessBoard)
         {
+            isReady = false;
             this.ChessBoard = chessBoard;
+        }
+
+        public void StartGame(PictureBox chessBox1, PictureBox chessBox2, TextBox player1Name, TextBox player2Name)
+        {
+            #region RandomMark
+            this.isReady = true;
+
+            Random rand = new Random();
+
+            int markChoice = rand.Next(0, 2);
+            #endregion
+
             this.PlayerList = new List<Player>()
             {
-                new Player("A", Image.FromFile(Application.StartupPath + "\\Assets\\circle.png")),
-
-                new Player("B", Image.FromFile(Application.StartupPath + "\\Assets\\cross.png"))
+                new Player(player1Name.Text, Image.FromFile(Application.StartupPath + $"\\Assets\\{markChoice}.png")),
+                new Player(player2Name.Text, Image.FromFile(Application.StartupPath + $"\\Assets\\{1-markChoice}.png"))
             };
 
             this.CurrentPlayer = 0;
@@ -90,8 +102,15 @@
             DetermineTurn();
         }
 
+        public void ResetGame()
+        {
+            this.isReady = false;
+        }
+
         public void drawChessBoard()
         {
+            ChessBoard.Controls.Clear();
+
             QTY_HORIZONTAL = Constant.CHESS_BOARD.Width / Constant.CHESS_WIDTH;
             QTY_VERTICAL = Constant.CHESS_BOARD.Height / Constant.CHESS_HEIGHT;
 
@@ -144,26 +163,33 @@
 
         private void Btn_Click(object? sender, EventArgs e)
         {
-            Button? btn = sender as Button;
-
-            if (btn.BackgroundImage != null)
+            if (isReady)
             {
-                return;
+                Button? btn = sender as Button;
+
+                if (btn.BackgroundImage != null)
+                {
+                    return;
+                }
+
+                btn.BackgroundImage = PlayerList[CurrentPlayer].ChessBoxMark;
+
+                if (isEndGame(btn))
+                {
+                    EndGame();
+                }
+
+                CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
+
+                DetermineTurn();
+
+                // Cu moi lan nhan button => Them vao stackCacNuocDi; TH nhan lai nut khong xay ra nen ko can xet trung
+                stackCacNuocDi.Add(btn);
             }
-
-            btn.BackgroundImage = PlayerList[CurrentPlayer].ChessBoxMark;
-
-            if (isEndGame(btn))
+            else
             {
-                EndGame();
+                MessageBox.Show("Please enter player_name before starting game", "Alert", MessageBoxButtons.OK);
             }
-
-            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
-
-            DetermineTurn();
-
-            // Cu moi lan nhan button => Them vao stackCacNuocDi; TH nhan lai nut khong xay ra nen ko can xet trung
-            stackCacNuocDi.Add(btn);
         }
 
         private void EndGame()
@@ -174,13 +200,10 @@
                     MessageBox.Show("Game is tie!");
                     break;
                 case ENDGAME.Player1:
-                    MessageBox.Show("Player 1 wins!");
+                    MessageBox.Show($"{TxtBoxPlayer1.Text} wins!");
                     break;
                 case ENDGAME.Player2:
-                    MessageBox.Show("Player 2 wins!");
-                    break;
-                case ENDGAME.COM:
-                    MessageBox.Show("Computer win!");
+                    MessageBox.Show($"{TxtBoxPlayer2.Text} wins!");
                     break;
             }
         }
@@ -254,7 +277,7 @@
                 }
                 else
                 {
-                    if (Matrix[i][matrixColumn].BackgroundImage != null) 
+                    if (Matrix[i][matrixColumn].BackgroundImage != null)
                     {
                         block2way++;
                     }
@@ -316,7 +339,7 @@
             matrixColumn = (btn.Location.X / 32) + 1;
             matrixRow = (btn.Location.Y / 32) + 1;
 
-  
+
             while (matrixRow < QTY_VERTICAL && matrixColumn < QTY_VERTICAL)
             {
                 if (Matrix[matrixRow][matrixColumn].BackgroundImage == btn.BackgroundImage)
