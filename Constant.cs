@@ -12,6 +12,7 @@ namespace GameCaro
         public static int CHESS_HEIGHT = 32;
 
         public static Size CHESS_BOARD = new Size(640, 640);
-        public static Point CHESS_INIT_LOCATION = new Point(2, 2);
+        public static Point CHESS_INIT_LOCATION =
+            new Point(-CHESS_WIDTH, 0);
     }
 }
