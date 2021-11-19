@@ -36,19 +36,40 @@ namespace GameCaro
         }
         #endregion
 
+        #region UIController
+        bool CanStartGame()
+        {
+            if (!String.IsNullOrEmpty(txtBoxPlayer1.Text) && !String.IsNullOrEmpty(txtBoxPlayer2.Text))
+            {
+                return true;
+            }
+
+            return false;
+        }
+        #endregion
+
         private void ConfirmName_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if(gameManager.IsReady)
             {
-                txtBoxPlayer1.ReadOnly = true;
-                txtBoxPlayer2.ReadOnly = true;
-                txtBoxPlayer1.PlaceholderText = String.Empty;
-                txtBoxPlayer2.PlaceholderText = String.Empty;
+                return;
+            }
 
-                if (!String.IsNullOrEmpty(txtBoxPlayer1.Text) && !String.IsNullOrEmpty(txtBoxPlayer2.Text))
+            if (CanStartGame() && !gameManager.IsReady)
+            {
+                if (MessageBox.Show("Are you sure?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
+                    txtBoxPlayer1.ReadOnly = true;
+                    txtBoxPlayer2.ReadOnly = true;
+                    txtBoxPlayer1.PlaceholderText = String.Empty;
+                    txtBoxPlayer2.PlaceholderText = String.Empty;
+
                     gameManager.StartGame(chessBox1, chessBox2, txtBoxPlayer1, txtBoxPlayer2);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please enter player_name", "Alert", MessageBoxButtons.OK);
             }
         }
 
@@ -59,7 +80,7 @@ namespace GameCaro
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("Do you really want to quit?", "Warning", MessageBoxButtons.OKCancel) != System.Windows.Forms.DialogResult.OK)
+            if (MessageBox.Show("Do you really want to quit?", "Warning", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
             {
                 e.Cancel = true;
             }
@@ -68,6 +89,12 @@ namespace GameCaro
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NewGame();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormAboutUs frmAboutUs = new FormAboutUs();
+            frmAboutUs.ShowDialog();
         }
     }
 }

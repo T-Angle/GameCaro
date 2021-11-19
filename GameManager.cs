@@ -63,19 +63,20 @@
             get => matrix;
             set => matrix = value;
         }
+        public bool IsReady { get => isReady; set => isReady = value; }
 
         #endregion
 
         public GameManager(Panel chessBoard)
         {
-            isReady = false;
+            IsReady = false;
             this.ChessBoard = chessBoard;
         }
 
         public void StartGame(PictureBox chessBox1, PictureBox chessBox2, TextBox player1Name, TextBox player2Name)
         {
             #region RandomMark
-            this.isReady = true;
+            this.IsReady = true;
 
             Random rand = new Random();
 
@@ -104,7 +105,7 @@
 
         public void ResetGame()
         {
-            this.isReady = false;
+            this.IsReady = false;
         }
 
         public void drawChessBoard()
@@ -163,7 +164,7 @@
 
         private void Btn_Click(object? sender, EventArgs e)
         {
-            if (isReady)
+            if (IsReady)
             {
                 Button? btn = sender as Button;
 
@@ -197,13 +198,13 @@
             switch (_endGame)
             {
                 case ENDGAME.HoaCo:
-                    MessageBox.Show("Game is tie!");
+                    MessageBox.Show("Game is tie!", "Congratulations", MessageBoxButtons.OK);
                     break;
                 case ENDGAME.Player1:
-                    MessageBox.Show($"{TxtBoxPlayer1.Text} wins!");
+                    MessageBox.Show($"{TxtBoxPlayer1.Text} wins!", "Congratulations", MessageBoxButtons.OK);
                     break;
                 case ENDGAME.Player2:
-                    MessageBox.Show($"{TxtBoxPlayer2.Text} wins!");
+                    MessageBox.Show($"{TxtBoxPlayer2.Text} wins!", "Congratulations", MessageBoxButtons.OK);
                     break;
             }
         }
