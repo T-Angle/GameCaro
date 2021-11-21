@@ -19,7 +19,7 @@ namespace GameCaro
             Application.Exit();
         }
 
-        void NewGame()
+        public void NewGame()
         {
             chessBox1.BackgroundImage = null;
             chessBox2.BackgroundImage = null;
@@ -95,6 +95,14 @@ namespace GameCaro
         {
             FormAboutUs frmAboutUs = new FormAboutUs();
             frmAboutUs.ShowDialog();
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(!gameManager.Undo())
+            {
+                MessageBox.Show("Currently at the initial step", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

@@ -17,13 +17,12 @@
 
         /* Gameplay explain
          * A list contains number of player(current allow 2 players)
-         * CurrentPlayer holds the inturn player which has only 0, 1 which is the index of List with lenght of 2
+         * CurrentPlayer holds the inturn player which has only 0, 1 which is the index of List with length of 2
          */
 
         #region Initialize
         private Panel chessBoard;
         private int currentPlayer;
-        private int nextPlayer;
         private List<Player> playerList;
         private PictureBox _imgChessBox1, _imgChessBox2;
         private TextBox _txtBoxPlayer1, _txtBoxPlayer2;
@@ -31,7 +30,7 @@
         private int QTY_VERTICAL;
 
         private List<List<Button>> matrix;
-        private List<Button> stackCacNuocDi;
+        private Stack<Point> stackCacNuocDi;
         private ENDGAME _endGame;
         private bool isReady;
 
@@ -73,6 +72,7 @@
             this.ChessBoard = chessBoard;
         }
 
+        #region UIInteraction
         public void StartGame(PictureBox chessBox1, PictureBox chessBox2, TextBox player1Name, TextBox player2Name)
         {
             #region RandomMark
@@ -90,11 +90,10 @@
             };
 
             this.CurrentPlayer = 0;
-            this.nextPlayer = CurrentPlayer;
 
-            this.stackCacNuocDi = new List<Button>();
+            this.stackCacNuocDi = new Stack<Point>();
 
-            //Set hien turn cua player
+            //Set turn cua player
             ImgChessBox1 = chessBox1;
             ImgChessBox2 = chessBox2;
             TxtBoxPlayer1 = player1Name;
@@ -108,9 +107,27 @@
             this.IsReady = false;
         }
 
+        public bool Undo()
+        {
+            if(stackCacNuocDi.Count > 0)
+            {
+                this.CurrentPlayer = 1 - this.CurrentPlayer;
+                DetermineTurn();
+
+                Point lastStepPoint = stackCacNuocDi.Pop();
+                Matrix[lastStepPoint.Y][lastStepPoint.X].BackgroundImage = null;
+
+                return true;
+            }
+
+            return false;
+        }
+        #endregion
+
         public void drawChessBoard()
         {
             ChessBoard.Controls.Clear();
+            ChessBoard.Enabled = true;
 
             QTY_HORIZONTAL = Constant.CHESS_BOARD.Width / Constant.CHESS_WIDTH;
             QTY_VERTICAL = Constant.CHESS_BOARD.Height / Constant.CHESS_HEIGHT;
@@ -148,18 +165,16 @@
             TxtBoxPlayer1.Text = "";
             TxtBoxPlayer2.Text = "";
 
-            if (this.nextPlayer == 0)
+            if (this.CurrentPlayer == 0)
             {
                 ImgChessBox1.BackgroundImage = PlayerList[0].ChessBoxMark;
                 TxtBoxPlayer1.Text = PlayerList[0].Name;
             }
-            else if (this.nextPlayer == 1)
+            else if (this.CurrentPlayer == 1)
             {
                 ImgChessBox2.BackgroundImage = PlayerList[1].ChessBoxMark;
                 TxtBoxPlayer2.Text = PlayerList[1].Name;
             }
-
-            this.nextPlayer = this.nextPlayer == 0 ? 1 : 0;
         }
 
         private void Btn_Click(object? sender, EventArgs e)
@@ -172,8 +187,11 @@
                 {
                     return;
                 }
-
+                
                 btn.BackgroundImage = PlayerList[CurrentPlayer].ChessBoxMark;
+
+                // Cu moi lan nhan button => Them vao stackCacNuocDi; TH nhan lai nut khong xay ra nen ko can xet trung
+                stackCacNuocDi.Push(new Point(btn.Location.X / 32, btn.Location.Y / 32));
 
                 if (isEndGame(btn))
                 {
@@ -184,8 +202,6 @@
 
                 DetermineTurn();
 
-                // Cu moi lan nhan button => Them vao stackCacNuocDi; TH nhan lai nut khong xay ra nen ko can xet trung
-                stackCacNuocDi.Add(btn);
             }
             else
             {
@@ -207,13 +223,20 @@
                     MessageBox.Show($"{TxtBoxPlayer2.Text} wins!", "Congratulations", MessageBoxButtons.OK);
                     break;
             }
+
+            ChessBoard.Enabled = false;
         }
 
         private bool isEndGame(Button btn)
         {
-            _endGame = CurrentPlayer == 0 ? ENDGAME.Player1 : ENDGAME.Player2;
+            if (isTie())
+            {
+                _endGame = ENDGAME.HoaCo;
+                return true;
+            }
 
-            return isEndHorizontal(btn) || isEndVertical(btn) || isEndPrimaryDiagonal(btn) || isEndSecondDiagonal(btn) || isTie(btn);
+            _endGame = CurrentPlayer == 0 ? ENDGAME.Player1 : ENDGAME.Player2;
+            return isEndHorizontal(btn) || isEndVertical(btn) || isEndPrimaryDiagonal(btn) || isEndSecondDiagonal(btn);
         }
 
         private bool isEndHorizontal(Button btn)
@@ -420,9 +443,8 @@
             return count >= 5 && block2way < 2;
         }
 
-        private bool isTie(Button btn)
+        private bool isTie()
         {
-            _endGame = ENDGAME.HoaCo;
             return stackCacNuocDi.Count == QTY_HORIZONTAL * QTY_VERTICAL;
         }
     }
