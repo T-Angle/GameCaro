@@ -1,12 +1,12 @@
 namespace GameCaro
 {
-    public partial class Form1 : Form
+    public partial class UIController : Form
     {
         #region Initialize
         GameManager gameManager;
         #endregion
 
-        public Form1()
+        public UIController()
         {
             InitializeComponent();
             gameManager = new GameManager(pnlChessBoard);
@@ -103,6 +103,11 @@ namespace GameCaro
             {
                 MessageBox.Show("Currently at the initial step", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void PlayerCaption_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

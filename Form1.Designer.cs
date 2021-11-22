@@ -1,6 +1,6 @@
 ﻿namespace GameCaro
 {
-    partial class Form1
+    partial class UIController
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UIController));
             this.pnlChessBoard = new System.Windows.Forms.Panel();
             this.chessBox2 = new System.Windows.Forms.PictureBox();
             this.chessBox1 = new System.Windows.Forms.PictureBox();
@@ -43,6 +43,7 @@
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConfirmName = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chessBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chessBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -61,7 +62,7 @@
             // chessBox2
             // 
             this.chessBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.chessBox2.Location = new System.Drawing.Point(665, 432);
+            this.chessBox2.Location = new System.Drawing.Point(665, 394);
             this.chessBox2.Name = "chessBox2";
             this.chessBox2.Size = new System.Drawing.Size(24, 24);
             this.chessBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -71,7 +72,7 @@
             // chessBox1
             // 
             this.chessBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.chessBox1.Location = new System.Drawing.Point(665, 385);
+            this.chessBox1.Location = new System.Drawing.Point(665, 349);
             this.chessBox1.Name = "chessBox1";
             this.chessBox1.Size = new System.Drawing.Size(24, 24);
             this.chessBox1.TabIndex = 12;
@@ -80,7 +81,7 @@
             // txtBoxPlayer2
             // 
             this.txtBoxPlayer2.BackColor = System.Drawing.SystemColors.Control;
-            this.txtBoxPlayer2.Location = new System.Drawing.Point(695, 432);
+            this.txtBoxPlayer2.Location = new System.Drawing.Point(695, 394);
             this.txtBoxPlayer2.Name = "txtBoxPlayer2";
             this.txtBoxPlayer2.PlaceholderText = "Player2_name";
             this.txtBoxPlayer2.Size = new System.Drawing.Size(237, 27);
@@ -89,7 +90,7 @@
             // txtBoxPlayer1
             // 
             this.txtBoxPlayer1.BackColor = System.Drawing.SystemColors.Control;
-            this.txtBoxPlayer1.Location = new System.Drawing.Point(695, 385);
+            this.txtBoxPlayer1.Location = new System.Drawing.Point(695, 349);
             this.txtBoxPlayer1.Name = "txtBoxPlayer1";
             this.txtBoxPlayer1.PlaceholderText = "Player1_name";
             this.txtBoxPlayer1.Size = new System.Drawing.Size(237, 27);
@@ -100,7 +101,7 @@
             this.PlayerCaption.AutoSize = true;
             this.PlayerCaption.Font = new System.Drawing.Font("Montserrat Medium", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.PlayerCaption.ForeColor = System.Drawing.Color.Red;
-            this.PlayerCaption.Location = new System.Drawing.Point(663, 340);
+            this.PlayerCaption.Location = new System.Drawing.Point(665, 310);
             this.PlayerCaption.Name = "PlayerCaption";
             this.PlayerCaption.Size = new System.Drawing.Size(60, 27);
             this.PlayerCaption.TabIndex = 9;
@@ -110,9 +111,9 @@
             // 
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(663, 43);
+            this.pictureBox1.Location = new System.Drawing.Point(665, 43);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(267, 265);
+            this.pictureBox1.Size = new System.Drawing.Size(267, 254);
             this.pictureBox1.TabIndex = 14;
             this.pictureBox1.TabStop = false;
             // 
@@ -142,7 +143,7 @@
             // 
             this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
             this.newGameToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.newGameToolStripMenuItem.Text = "New game";
             this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
             // 
@@ -150,7 +151,7 @@
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -158,7 +159,7 @@
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             this.quitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -172,7 +173,7 @@
             // ConfirmName
             // 
             this.ConfirmName.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ConfirmName.Location = new System.Drawing.Point(665, 474);
+            this.ConfirmName.Location = new System.Drawing.Point(665, 437);
             this.ConfirmName.Name = "ConfirmName";
             this.ConfirmName.Size = new System.Drawing.Size(267, 29);
             this.ConfirmName.TabIndex = 16;
@@ -180,11 +181,27 @@
             this.ConfirmName.UseVisualStyleBackColor = true;
             this.ConfirmName.Click += new System.EventHandler(this.ConfirmName_Click);
             // 
-            // Form1
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Location = new System.Drawing.Point(665, 486);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.richTextBox1.Size = new System.Drawing.Size(266, 213);
+            this.richTextBox1.TabIndex = 17;
+            this.richTextBox1.Text = "HELP:\n- Start game by entering 2 players\' name first\n- Get 5 on whatever directio" +
+    "n first will be winner\n\nSHORTCUT:\n- Ctrl + N: New game\n- Ctrl + Z: Undo\n- Ctrl +" +
+    " Q: Quit";
+            this.richTextBox1.UseWaitCursor = true;
+            // 
+            // UIController
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(940, 706);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.ConfirmName);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.chessBox2);
@@ -196,7 +213,7 @@
             this.Controls.Add(this.menuStrip1);
             this.ForeColor = System.Drawing.SystemColors.Control;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "UIController";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GameCaro-Back To Childhood";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -226,5 +243,6 @@
         private ToolStripMenuItem quitToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private Button ConfirmName;
+        private RichTextBox richTextBox1;
     }
 }
