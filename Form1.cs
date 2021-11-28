@@ -99,7 +99,11 @@ namespace GameCaro
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(!gameManager.Undo())
+            if(!gameManager.IsReady)
+            {
+                MessageBox.Show("Game is not start", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } 
+            else if (!gameManager.Undo())
             {
                 MessageBox.Show("Currently at the initial step", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

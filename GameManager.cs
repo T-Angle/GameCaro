@@ -225,6 +225,7 @@
             }
 
             ChessBoard.Enabled = false;
+            IsReady = false;
         }
 
         private bool isEndGame(Button btn)

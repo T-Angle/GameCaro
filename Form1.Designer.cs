@@ -185,6 +185,7 @@
             // 
             this.richTextBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.richTextBox1.Location = new System.Drawing.Point(665, 486);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
@@ -194,7 +195,6 @@
             this.richTextBox1.Text = "HELP:\n- Start game by entering 2 players\' name first\n- Get 5 on whatever directio" +
     "n first will be winner\n\nSHORTCUT:\n- Ctrl + N: New game\n- Ctrl + Z: Undo\n- Ctrl +" +
     " Q: Quit";
-            this.richTextBox1.UseWaitCursor = true;
             // 
             // UIController
             // 
